@@ -1,0 +1,8 @@
+%Reading an image
+% A =IMREAD(FILNAME,gul)
+im=imread('.\char recog \testimage.bmp');
+imshow(im)
+figure
+imshow(im)
+figure,imshow(im)
+charrec(im)
