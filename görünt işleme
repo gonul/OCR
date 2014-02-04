@@ -1,0 +1,33 @@
+int denemeValue;
+ 
+void deneme()
+{
+double fmax = -1.0;
+double m1, m2, S, toplam1 = 0.0, toplam2 = 0.0;
+int nTop = 0, n1 = 0, n2;
+ 
+for (int i = 0; i < 256; i++)
+{
+toplam1 += (double)i * (double)histogram[i];
+nTop += histogram[i];
+}
+ 
+for (int i = 0; i < 256; i++)
+{
+n1 += histogram[i];
+if (n1 == 0)
+continue;
+n2 = nTop - n1;
+if (n2 == 0)
+break;
+toplam2 += (double)i * (double)histogram[i];
+m1 = toplam2 / n1;
+m2 = (toplam1 - toplam2) / n2;
+S = (double)n1 * (double)n2 * (m1 - m2) * (m1 - m2);
+if (S > fmax)
+{
+fmax = S;
+denemeValue = i;
+}
+}
+}
