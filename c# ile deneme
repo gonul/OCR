@@ -1,0 +1,29 @@
+int[,] pixelArray = new int[pictureBox1.Image.Height, pictureBox1.Image.Width];
+int[,] greyPixelArray = new int[pictureBox1.Image.Height, pictureBox1.Image.Width];
+int[] histogram = new int[256];
+ 
+void BuildPixelArray(ref Image myImage)
+{
+pixelArray = new int[imageWidth, imageHeight];
+greyPixelArray = new int[imageWidth, imageHeight];
+Rectangle rect = new Rectangle(0, 0, myImage.Width, myImage.Height);
+Bitmap temp = new Bitmap(myImage);
+BitmapData bmpData = temp.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+int remain = bmpData.Stride - bmpData.Width * 3;
+unsafe
+{
+byte* ptr = (byte*)bmpData.Scan0;
+for (int j = 0; j < bmpData.Height; j++)
+{
+for (int i = 0; i < bmpData.Width; i++)
+{
+pixelArray[i, j] = ptr[0] + ptr[1] * 256 + ptr[2] * 256 * 256;
+greyPixelArray[i, j] = (int)((double)ptr[0] * 0.11 + (double)ptr[1] * 0.59 + (double)ptr[2] * 0.3);
+histogram[greyPixelArray[i, j]]++;
+ptr += 3;
+}
+ptr += remain;
+}
+}
+temp.UnlockBits(bmpData);
+}
