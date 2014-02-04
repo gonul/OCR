@@ -1,0 +1,8 @@
+>> redchannel = myimage(:,:,1);
+>> greenchannel = myimage(:,:,2);
+>> bluechannel = myimage(:,:,3);
+
+if(imagetype=Async)
+{
+myimage = imread('myimage.extension');
+}
